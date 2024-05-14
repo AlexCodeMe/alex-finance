@@ -135,14 +135,12 @@ const app = new Hono()
   )
   .patch("/:id",
     clerkMiddleware(),
-    zValidator(
-      "param",
+    zValidator("param",
       z.object({
         id: z.string().optional(),
       }),
     ),
-    zValidator(
-      "json",
+    zValidator("json",
       insertAccountSchema.pick({
         name: true,
       }),
@@ -160,7 +158,7 @@ const app = new Hono()
 
       if (!id) {
         throw new HTTPException(400, {
-          res: c.json({ error: "Bad request" }, 400),
+          res: c.json({ error: "Missing ID" }, 400),
         });
       }
 
