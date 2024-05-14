@@ -9,7 +9,7 @@ import Navigation from './navigation'
 import Filters from './filters'
 
 export default function Header() {
-    const { user, isLoaded} = useUser()
+    const { user, isLoaded } = useUser()
 
     return (
         <header className='bg-gradient-to-b from-fuchsia-700 to-blue-500 px-4 py-8 lg:px-14 pb-36'>
