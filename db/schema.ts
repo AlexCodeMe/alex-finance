@@ -14,7 +14,7 @@ export const accountsRelations = relations(accounts, ({ many }) => ({
     transactions: many(transactions)
 }))
 
-export const insertAccountsSchema = createInsertSchema(accounts)
+export const insertAccountSchema = createInsertSchema(accounts)
 
 export const transactions = pgTable('transactions', {
     id: text('id').primaryKey(),
