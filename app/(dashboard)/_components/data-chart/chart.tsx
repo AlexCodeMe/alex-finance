@@ -21,10 +21,6 @@ export default function Chart({ data = [] }: Props) {
     const [chartType, setChartType] = useState('line')
 
     const onTypeChange = (type: string) => {
-        // if (type !== "area") {
-        //   return;
-        // }
-    
         setChartType(type);
       }
 
