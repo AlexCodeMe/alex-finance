@@ -133,10 +133,11 @@ const app = new Hono()
       return c.json({ data })
     },
   )
-  .post('/bulk-create',
+  .post(
+    "/bulk-create",
     clerkMiddleware(),
     zValidator(
-      'json',
+      "json",
       z.array(
         insertTransactionSchema.omit({
           id: true,
@@ -144,13 +145,13 @@ const app = new Hono()
       ),
     ),
     async (c) => {
-      const auth = getAuth(c)
-      const values = c.req.valid('json')
+      const auth = getAuth(c);
+      const values = c.req.valid("json");
 
       if (!auth?.userId) {
         throw new HTTPException(401, {
-          res: c.json({ error: 'Unauthorized' }, 401),
-        })
+          res: c.json({ error: "Unauthorized" }, 401),
+        });
       }
 
       const data = await db.insert(transactions).values(
@@ -158,9 +159,9 @@ const app = new Hono()
           id: createId(),
           ...value,
         })),
-      ).returning()
+      ).returning();
 
-      return c.json({ data })
+      return c.json({ data });
     },
   )
   .post('/bulk-delete',

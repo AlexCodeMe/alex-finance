@@ -10,10 +10,12 @@ import { useNewTransaction } from '@/features/transactions/hooks/use-new-transac
 import { useBulkCreateTransactions } from '@/features/transactions/api/use-bulk-create-transactions'
 import { useBulkDeletetransactions } from '@/features/transactions/api/use-bulk-delete-transactions'
 import { useGetTransactions } from '@/features/transactions/api/use-get-transactions'
-import { transactions } from '@/db/schema'
+import { transactions as transactionsSchema} from '@/db/schema'
 import { toast } from 'sonner'
 import { useSelectAccount } from '@/features/accounts/hooks/use-select-account'
 import { DataTable } from '@/components/data-table'
+import UploadButton from './_components/upload-button'
+import { ImportCard } from './_components/import-card'
 
 enum VARIANTS {
     LIST = 'LIST',
@@ -48,7 +50,7 @@ export default function TransactionsPage() {
         setVariant(VARIANTS.LIST)
     }
 
-    const onSubmitImport = async (values: typeof transactions.$inferInsert[]) => {
+    const onSubmitImport = async (values: typeof transactionsSchema.$inferInsert[]) => {
         const accountId = await confirm()
 
         if (!accountId) return toast.error('Select an account to continue.')
@@ -81,10 +83,9 @@ export default function TransactionsPage() {
     ) : variant === VARIANTS.IMPORT ? (
         <>
             <AccountDialog />
-            <p>ImportCard</p>
-            {/* <ImportCard data={importResults.data}
+            <ImportCard data={importResults.data}
                 onCancel={onCancelImport}
-                onSubmit={onSubmitImport} /> */}
+                onSubmit={onSubmitImport} />
         </>
     ) : (
         <div className='max-w-screen-2xl mx-auto w-full pb-10 -mt-24'>
@@ -100,12 +101,11 @@ export default function TransactionsPage() {
                             <Plus className='size-4 mr-2' />
                             Add new
                         </Button>
-                        <p>UploadButton</p>
-                        {/* <UploadButton onUpload={onUpload} /> */}
+                        <UploadButton onUpload={onUpload} />
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <DataTable columns={columns} 
+                    <DataTable columns={columns}
                         data={transactionsData}
                         filterKey='payee'
                         onDelete={(row) => {
